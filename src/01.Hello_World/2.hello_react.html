@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">App</div>
+
+    <!-- 添加React的依赖。crossorigin用于在自己的控制台打印库有没有错误 -->
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      // <h2></h2> 就是JSX语法
+      /*
+      let message = "Hello React";
+      ReactDOM.render(<h2>{message}</h2>, document.querySelector("#app"));
+      */
+
+      let message = "Hello World";
+      function btnClick() {
+        message = "Hello React";
+        console.log(message);
+        render();
+      }
+
+      function render() {
+        ReactDOM.render(
+          <div>
+            <h2>{message}</h2>
+            <button onClick={btnClick}>改变文本</button>
+          </div>,
+          document.querySelector("#app")
+        );
+      }
+
+      render();
+    </script>
+  </body>
+</html>
