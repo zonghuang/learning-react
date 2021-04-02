@@ -1,0 +1,87 @@
+const UserContext = React.createContext({ nickname: "默认", level: 1 })
+const UserContext = React.createContext({ nickname: "默认", level: 1 })
+const ThemeContext = React.createContext({ color: "black" });
+
+class ProfileHeader extends Component {
+  render() {
+    return <div>用户昵称: {this.context.nickname}</div>
+  }
+}
+
+function ProfileHeader(props) {
+  return (
+    <div>
+      <UserContext.Consumer>
+        {value => {
+          return <div>用户昵称: {value.nickname}</div>
+        }}
+      </UserContext.Consumer>
+      // 使用Consumer嵌套时，见最下面
+    </div>
+  )
+}
+
+ProfileHeader.contextType = UserContext;
+
+class Profile extends Component {
+  render() {
+    return <div><ProfileHeader /></div>
+  }
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <UserContext.Provider value={{ nickname: "zonghuang", level: 99 }}>
+          <ThemeContext.Provider value={{color: "red"}}>
+            <Profile />
+          </ThemeContext.Provider>
+        </UserContext.Provider>
+      </div>
+    )
+  }
+}
+
+----------------------
+使用Consumer的嵌套
+<UserContext.Consumer>
+  {value => {
+    return (
+      <ThemeContext.Consumer>
+        {
+          theme => (
+            <div>
+              <h2 style={theme}>用户昵称: {value.nickname}</h2>
+              <h2 style={theme}>用户等级: {value.level}</h2>
+            </div>
+          )
+        }
+      </ThemeContext.Consumer>
+    )
+  }}
+</UserContext.Consumer>
+
+
+import store from '../store';
+constructor(props) {
+  this.state = { counter: store.getState().counter }
+}
+
+componentDidMount() {
+  this.unsubscribue = store.subscribe(() => {
+    this.setState({ counter: store.getState().counter })
+  })
+}
+
+componentWillUnmount() {
+  this.unsubscribue();
+}
+
+render() {
+  <button onClick={e => this.addNumber(5)}>+5</button>
+}
+
+addNumber(num) {
+  store.dispatch(addAction(num));
+}
